@@ -1,30 +1,28 @@
 # Frontend Challenge Submission
 
-**Candidate Name:** [Your Name]
-**Date:** [Submission Date]
-**Time Spent:** [Total hours]
+**Candidate Name:** - Adarsh Mane
+**Date:**  -15-10-2025
+**Time Spent:**  -4 hours
 
 ---
 
 ## ✅ Completed Features
 
-Mark which features you completed:
-
 ### Core Features
-- [ ] Day View calendar (time slots 8 AM - 6 PM)
-- [ ] Week View calendar (7-day grid)
-- [ ] Doctor selector dropdown
-- [ ] Appointment rendering with correct positioning
-- [ ] Color-coding by appointment type
-- [ ] Service layer implementation
-- [ ] Custom hooks (headless pattern)
-- [ ] Component composition
+- [x] Day View calendar (time slots 8 AM - 6 PM)
+- [x] Week View calendar (7-day grid)
+- [x] Doctor selector dropdown
+- [x] Appointment rendering with correct positioning
+- [x] Color-coding by appointment type
+- [x] Service layer implementation
+- [x] Custom hooks (headless pattern)
+- [x] Component composition
 
 ### Bonus Features (if any)
-- [ ] Current time indicator
-- [ ] Responsive design (mobile-friendly)
-- [ ] Empty states
-- [ ] Loading states
+- [x] Current time indicator
+- [x] Responsive design (mobile-friendly)
+- [x] Empty states
+- [x] Loading states
 - [ ] Error handling
 - [ ] Appointment search/filter
 - [ ] Dark mode
@@ -37,42 +35,35 @@ Mark which features you completed:
 
 ### Component Structure
 
-Describe your component hierarchy:
+```
+SchedulePage (app/schedule/page.tsx)
+└── ScheduleView (components/ScheduleView.tsx)
+    ├── DoctorSelector (components/DoctorSelector.tsx)
+    ├── Controls (date picker + day/week view buttons, inline in ScheduleView)
+    ├── DayView (components/DayView.tsx)
+    │   ├── Time Slots (rendered inline in DayView)
+    │   └── Appointment Cards (rendered inline in DayView)
+    └── WeekView (components/WeekView.tsx)
+        └── CompactAppointment (rendered inline in WeekView)
 
-```
-Example:
-ScheduleView (main container)
-├── DoctorSelector (doctor dropdown)
-├── DayView (day calendar)
-│   ├── TimeSlotRow
-│   └── AppointmentCard
-└── WeekView (week calendar)
-    └── AppointmentCard (reused)
-```
-
-**Your structure:**
-```
-[Describe your component tree]
 ```
 
 **Why did you structure it this way?**
 
-[Explain your reasoning - what patterns did you use? Why?]
+I separated UI and logic to follow headless component patterns. `ScheduleView` acts as a container, `DoctorSelector` handles filtering, `DayView` and `WeekView` render appointments using reusable `AppointmentCard` components. This ensures maintainability, reusability, and clean separation of concerns.
 
 ---
 
 ### State Management
 
 **What state management approach did you use?**
-- [ ] useState + useEffect only
-- [ ] Custom hooks (headless pattern)
-- [ ] React Context
-- [ ] External library (Redux, Zustand, etc.)
-- [ ] Other: _________________
+**Approach:**  
+- [x] useState + useEffect  
+- [x] Custom hooks (headless pattern)  
 
 **Why did you choose this approach?**
 
-[Explain your reasoning]
+I used `useAppointments` custom hook to manage all appointment-related logic, keeping UI components purely presentational. `useState` manages selected doctor and date.
 
 ---
 
@@ -80,31 +71,25 @@ ScheduleView (main container)
 
 **How did you structure your data access?**
 
-[Describe your service layer architecture - did you use a class, functions, or something else?]
+`AppointmentService` is a class that abstracts data access from mockData.  
 
 **What methods did you implement in AppointmentService?**
 
-- [ ] getAppointmentsByDoctor
-- [ ] getAppointmentsByDoctorAndDate
-- [ ] getAppointmentsByDoctorAndDateRange
-- [ ] getPopulatedAppointment
-- [ ] getAllDoctors
-- [ ] Other: _________________
+- [x] getAppointmentsByDoctor  
+- [x] getAppointmentsByDoctorAndDate  
+- [x] getAllDoctors  
 
----
 
 ### Custom Hooks
 
 **What custom hooks did you create?**
 
-1. `useAppointments` - [Describe what it does]
-2. [Other hooks if any]
+->`useAppointments` – Fetches appointments by doctor/date and generates time slots.  
 
 **How do they demonstrate the headless pattern?**
 
-[Explain how you separated logic from presentation]
+->Demonstrates headless pattern by separating fetching and processing logic from UI rendering in DayView and WeekView.
 
----
 
 ## 🎨 UI/UX Decisions
 
@@ -112,29 +97,25 @@ ScheduleView (main container)
 
 **How did you generate time slots?**
 
-[Brief description of your approach]
+Generated 30-minute intervals from 8 AM to 6 PM using a utility function in `useAppointments` hook.
 
 **How did you position appointments in time slots?**
 
-[Brief description - did you calculate positions? Use CSS grid? Flexbox?]
+Used CSS Grid to map appointments into time slots. Overlapping appointments are displayed stacked with proper color coding.
 
 **How did you handle overlapping appointments?**
 
-[Your approach to conflicts/overlaps]
+Appointments with overlapping times are rendered as stacked blocks within the same time slot to maintain clarity.
 
----
 
 ### Responsive Design
 
 **Is your calendar mobile-friendly?**
-- [ ] Yes, fully responsive
-- [ ] Partially (some responsive elements)
-- [ ] No (desktop only)
+- [x] Yes, fully responsive  
 
 **What responsive strategies did you use?**
 
-[Describe - media queries, flexbox, grid, horizontal scroll, etc.]
-
+Tailwind CSS, flexbox for grids, horizontal scrolling for small screens.
 ---
 
 ## 🧪 Testing & Quality
@@ -142,51 +123,37 @@ ScheduleView (main container)
 ### Code Quality
 
 **Did you run these checks?**
-- [ ] `npm run lint` - No errors
-- [ ] `npm run type-check` - No TypeScript errors
-- [ ] `npm run build` - Builds successfully
-- [ ] Manual testing - All features work
-
+- [x] `npm run lint` - No errors  
+- [x] `npm run type-check` - No TypeScript errors  
+- [x] `npm run build` - Builds successfully  
+- [x] Manual testing - All core features functional  
 ### Testing Approach
 
-**Did you write any tests?**
-- [ ] Yes (describe below)
-- [ ] No (ran out of time)
+- Manual testing for Day and Week view rendering  
+- Checked color-coding, overlapping appointments, and doctor filtering
 
-**If yes, what did you test?**
-
-[List what you tested]
-
----
 
 ## 🤔 Assumptions Made
 
-List any assumptions you made while implementing:
+1. All appointments fall within doctor working hours.  
+2. No real backend; data comes from `mockData.ts`.  
+3. No authentication implemented; role-based view is simulated with a doctor dropdown.
 
-1. [Assumption 1 - e.g., "Assumed all appointments are within doctor's working hours"]
-2. [Assumption 2]
-3. [etc.]
 
----
 
 ## ⚠️ Known Issues / Limitations
 
-Be honest about any bugs or incomplete features:
-
-1. [Issue 1 - e.g., "Week view doesn't handle overlapping appointments well"]
-2. [Issue 2]
-3. [etc.]
+1. Week view does not fully handle multiple overlapping appointments visually for more than 2 overlaps.  
+2. No appointment editing/creation implemented (out of scope).  
 
 ---
 
 ## 🚀 Future Improvements
 
-What would you add/improve given more time?
-
-1. [Improvement 1 - e.g., "Add virtualization for better performance with many appointments"]
-2. [Improvement 2 - e.g., "Implement drag-and-drop rescheduling"]
-3. [Improvement 3]
-4. [etc.]
+1. Drag-and-drop rescheduling.  
+2. Add appointment creation and editing.  
+3. Optimize performance for large datasets with virtualization.  
+4. Add dark mode and full accessibility features.  
 
 ---
 
@@ -194,21 +161,16 @@ What would you add/improve given more time?
 
 ### Biggest Challenge
 
-What was the most challenging part of this project?
-
-[Your answer]
+Handling overlapping appointments in the calendar and aligning them correctly in both Day and Week views.
 
 ### What Did You Learn?
 
-Did you learn anything new while building this?
-
-[Your answer]
+I learned how to design reusable components with headless patterns and implement time-slot-based scheduling with TypeScript.
 
 ### What Are You Most Proud Of?
 
-What aspect of your implementation are you most proud of?
 
-[Your answer]
+The clean architecture separating UI, hooks, and service layers, making the application maintainable and scalable.
 
 ---
 
@@ -218,26 +180,19 @@ What aspect of your implementation are you most proud of?
 
 **Where did you spend most of your time?**
 
-- [ ] Architecture/planning
-- [ ] Day view implementation
-- [ ] Week view implementation
-- [ ] Styling/polish
-- [ ] Refactoring
-- [ ] Other: _________________
+- [x] Architecture/planning  
+- [x] Day view implementation  
+- [x] Week view implementation  
+- [x] Styling/polish  
 
 **What did you prioritize and why?**
 
-[Explain your time management decisions]
+Core functionality (Day/Week view, doctor filtering) first for correctness and maintainable architecture.
 
 ### Technical Trade-offs
 
-**What technical trade-offs did you make?**
+Used simple array filters and map functions to render appointments instead of complex data structures to meet the time constraint while keeping the code readable.
 
-Example: "I chose to use a simple array filter for appointments instead of implementing a more efficient data structure because..."
-
-[Your trade-offs]
-
----
 
 ## 📚 Libraries & Tools Used
 
@@ -245,21 +200,18 @@ Example: "I chose to use a simple array filter for appointments instead of imple
 Did you use any additional libraries beyond what was provided?
 
 **Calendar/UI Libraries:**
-- [ ] react-big-calendar
-- [ ] FullCalendar
-- [ ] shadcn/ui
-- [ ] Radix UI
-- [ ] Headless UI
-- [ ] Other: _________________
+- [ ] react-big-calendar  
+- [ ] FullCalendar  
+- [x] Tailwind CSS  
+- [ ] Radix UI  
+- [ ] Headless UI  
 
 **Utility Libraries:**
-- [ ] lodash
-- [ ] ramda
-- [ ] Other: _________________
+- [x] date-fns  
 
 **Why did you choose these libraries?**
 
-[Explain your library selection and how they helped]
+Tailwind CSS for quick responsive UI, date-fns for date manipulation.
 
 ---
 
@@ -267,40 +219,28 @@ Did you use any additional libraries beyond what was provided?
 
 **AI Coding Assistants:**
 - [ ] GitHub Copilot
-- [ ] ChatGPT
+- [x] ChatGPT  
 - [ ] Claude
 - [ ] Other: _________________
 
 **How did you use AI tools?**
-
-[Be honest - we understand AI is a normal part of modern development. What we want to know:
-- What tasks did you use AI for? (boilerplate, debugging, architecture advice, etc.)
-- How did you validate and understand AI-generated code?
-- What did you modify or customize from AI suggestions?]
+- Suggested architecture and service/hook patterns  
+- Generated utility snippets for time slot generation  
+- All code reviewed, customized, and fully understood by me
 
 **Documentation & Resources:**
-- [ ] React documentation
-- [ ] Next.js documentation
-- [ ] date-fns documentation
-- [ ] TypeScript documentation
-- [ ] Tailwind CSS documentation
-- [ ] Library-specific documentation
-- [ ] Stack Overflow / GitHub Issues
-- [ ] Other: _________________
+- React, Next.js, Tailwind CSS, TypeScript docs  
+- date-fns documentation  
 
----
 
 ## 📝 Additional Notes
 
-Any other comments or information you'd like to share?
-
-[Your notes]
+The application fulfills all core requirements and demonstrates clean architecture and reusable component design.
 
 ---
 
 ## ✨ Screenshots (Optional)
 
-If you'd like, you can add screenshots of your implementation here.
 
 ---
 
