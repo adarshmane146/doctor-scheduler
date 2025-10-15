@@ -67,6 +67,8 @@ export interface Patient {
 export interface Appointment {
   id: string;
   patientId: string;
+  patientName?: string;
+  //patientName: string; // ✅ add this line
   doctorId: string;
   type: AppointmentType;
   startTime: string;     // ISO datetime string
